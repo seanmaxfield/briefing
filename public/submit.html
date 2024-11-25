@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Article</title>
+</head>
+<body>
+    <h1>Submit an Article</h1>
+    <form id="article-form">
+        <input type="text" id="title" placeholder="Title" required />
+        <input type="text" id="author" placeholder="Author" required />
+        <input type="email" id="contact" placeholder="Contact Info" required />
+        <textarea id="description" placeholder="Description" required></textarea>
+        <textarea id="article" placeholder="Article Text" required></textarea>
+        <button type="submit">Submit</button>
+    </form>
+    <script>
+        const articleForm = document.getElementById('article-form');
+        articleForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const articleData = {
+                title: document.getElementById('title').value,
+                author: document.getElementById('author').value,
+                contact: document.getElementById('contact').value,
+                description: document.getElementById('description').value,
+                article: document.getElementById('article').value,
+            };
+            const response = await fetch('/submit-article', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(articleData),
+            });
+            const result = await response.json();
+            alert(result.message);
+        });
+    </script>
+</body>
+</html>
